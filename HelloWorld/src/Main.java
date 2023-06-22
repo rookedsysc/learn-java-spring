@@ -1,14 +1,7 @@
 public class Main {
-
     public  static  void main(String[] args) {
-        int result;
-        result = new Add().calc(12, 2);
-        System.out.println(result);
-        result = new Sub().calc(12, 2);
-        System.out.println(result);
-        result = new Multiple().calc(12, 2);
-        System.out.println(result);
-        result = new Divide().calc(12, 2);
-        System.out.println(result);
+        int kor = 77;
+        int eng = 87;
+        System.out.println("총접 : " + (eng + kor) + " 평균 : " + ((eng + kor) / 2));
     }
 }
