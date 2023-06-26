@@ -1,9 +1,7 @@
 package com.example.restapi.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.restapi.model.BookQueryParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
@@ -29,12 +27,42 @@ public class RestApiController {
         return message;
     }
 
-    @GetMapping(path = "/echo_upper/{message}")
+    // http://localhost:8080/api/echo_upper/hi/age/500/isMan/false
+    @GetMapping(path = "/echo_upper/{message}/age/{age}/isMan/{isMan}")
     public String echo_upper(
             // 위에 {}에 쓰여진 이름과 다를 경우 name=""을 통해 어디에 매칭 시켜줄지 정할 수 있다.
-            @PathVariable(name = "message") String msg
+            @PathVariable(name = "message") String msg,
+            @PathVariable int age,
+            @PathVariable boolean isMan
     ) {
         System.out.println("echo message : " + msg);
+        System.out.println("echo message : " + age);
+        System.out.println("echo message : " + isMan);
+
         return msg.toUpperCase();
+    }
+
+    // http://localhost:8080/api/book?category=IT&issuedYear=2018&issued-month=01&issued_day=31
+    @GetMapping(path = "/book")
+    public void book(
+            // Query Parameter를 지정
+            @RequestParam String category,
+            @RequestParam String issuedYear,
+            // Query Parameter를 어떤 이름으로 전달할지 지정
+            @RequestParam(name = "issued-month")String issuedMonth ,
+            @RequestParam(name = "issued_day")String issuedDay
+    )  {
+        System.out.println(category);
+        System.out.println(issuedYear);
+        System.out.println(issuedMonth);
+        System.out.println(issuedDay);
+    }
+
+    // http://localhost:8080/api/book2?category=IT&issuedYear=2018&issuedMonth=01&issuedDay=31
+    @GetMapping(path = "/book2")
+    public void book2(
+            BookQueryParam bookQueryParam
+    )  {
+        System.out.println(bookQueryParam.toString());
     }
 }
