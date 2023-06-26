@@ -1,10 +1,7 @@
 package com.example.restapi.controller;
 
 import com.example.restapi.model.BookRequest;
-import com.example.restapi.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.restapi.model.UserRequest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,8 +18,8 @@ public class PostApiController {
     }
 
     @PostMapping(path = "user")
-    public User getUser(
-            @RequestBody User user
+    public UserRequest getUser(
+            @RequestBody UserRequest user
     ) {
         System.out.println(user);
         return user;
