@@ -1,10 +1,12 @@
 package com.example.restapi.controller;
 
 import com.example.restapi.model.BookQueryParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
+@Slf4j
 // RestAPI를 처리하는 Controller
 @RestController
 // 어떠한 주소를 받을지 지정
@@ -64,5 +66,13 @@ public class RestApiController {
             BookQueryParam bookQueryParam
     )  {
         System.out.println(bookQueryParam.toString());
+    }
+
+    // 아래와 같이 여러 개의 path를 받아줄 수도 잇음
+    @DeleteMapping(path = {"/user/{userName}/delete", "/user/{userName}/del"})
+    public void delete(
+           @PathVariable String userName
+    ) {
+        log.info("user-name : {}", userName);
     }
 }
