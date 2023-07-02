@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserRequest {
     private String userName;
-    private Integer userPhoneNumber;
     private String userEmail;
-    private Boolean isKorean;
+    private int age;
 }
