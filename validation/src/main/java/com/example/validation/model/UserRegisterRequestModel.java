@@ -1,8 +1,11 @@
 package com.example.validation.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
+import com.example.validation.annotation.PhoneNumberAnnotation;
+import com.example.validation.annotation.YearMonthAnnotation;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.*;
@@ -17,8 +20,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserRegisterRequestModel {
-    @NotBlank
     private String name;
+    private String nickName;
     @NotNull
     @Min(1)
     @Max(100)
@@ -28,9 +31,23 @@ public class UserRegisterRequestModel {
     private String password;
     @Email
     private String email;
-    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$")
+    @PhoneNumberAnnotation
     private String phoneNumber;
-    // ISO 8601로 들어가야 해서 2023-07-12T10:15:30 이런식으로 들어가야 함
     @FutureOrPresent
     private LocalDateTime registerAt;
+    @YearMonthAnnotation
+    private String birthday;
+
+    // 반드시 이름은 is 또는 get
+    @AssertTrue(message = "name or nickName is required")
+    public boolean isNameCheck() {
+        if(Objects.nonNull(nickName) && !nickName.isBlank()) {
+            return true;
+        }
+        if(Objects.nonNull(name) && !name.isBlank()) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -22,38 +22,9 @@ public class UserApiController {
     public ApiModel<UserRegisterRequestModel> register(
             @RequestBody
             @Valid
-            ApiModel<UserRegisterRequestModel> userRegisterRequest,
-            BindingResult bindingResult
+            ApiModel<UserRegisterRequestModel> userRegisterRequest
     ) {
         log.info(" init {}", userRegisterRequest);
-        UserRegisterRequestModel body = userRegisterRequest.getData();
-        if(bindingResult.hasErrors()) {
-            List<String> errorMessageList = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(
-                            objectError -> {
-                                String format = "%s : { %s } 은 %s";
-                                return String.format(format, objectError.getField(), objectError.getRejectedValue(), objectError.getDefaultMessage());
-                            })
-                    .toList();
-
-            ApiModel.Error error = ApiModel.Error.builder()
-                    .errorMessage(errorMessageList)
-                    .build();
-
-            ApiModel<UserRegisterRequestModel> errorResponse = ApiModel.<UserRegisterRequestModel>builder()
-                    .err(error)
-                    .resultMessages(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                    .resultCode(String.valueOf(HttpStatus.BAD_REQUEST.value()))
-                    .build();
-
-        }
-
-        ApiModel<UserRegisterRequestModel> response = ApiModel.<UserRegisterRequestModel>builder()
-                .resultCode(String.valueOf(HttpStatus.OK.value()))
-                .resultMessages(HttpStatus.OK.getReasonPhrase())
-                .data(body)
-                .build();
-        return response;
+        return userRegisterRequest;
     }
 }
