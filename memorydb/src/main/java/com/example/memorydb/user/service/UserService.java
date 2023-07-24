@@ -26,14 +26,16 @@ public class UserService {
     }
 
     public void delete(Long id){
-        userRepository.delete(id);
+//        userRepository.delete(user);
     }
 
     public List<UserEntity> findAllScoreGreaterThen(Integer score) {
-        return userRepository.findAllScoreGreaterThen(score);
+        return null;
+//        return userRepository.findAllScoreGreaterThen(score);
     }
 
     public Optional<UserEntity> findById(Long id) {
-        return userRepository.findByID(id);
+        return null;
+//        return userRepository.findByID(id);
     }
 }

@@ -11,12 +11,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@javax.persistence.Entity(name = "book")
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BookEntity extends Entity {
+    @Id
+    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String category;
     private BigDecimal price;
