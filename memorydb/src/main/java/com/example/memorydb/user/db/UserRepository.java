@@ -7,15 +7,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserRepository extends SimpleDataRepository<UserEntity, Long> {
     public List<UserEntity> findAllScoreGreaterThen(Integer score) {
         List<UserEntity> dataList = findAll();
 
-        return dataList.stream().filter(
-                val -> val.getScore() >= score
-        ).toList();
+        return dataList.stream()
+                .filter(
+                        val -> val.getScore() >= score
+                )
+                .collect(Collectors.toList());
     }
 
 }

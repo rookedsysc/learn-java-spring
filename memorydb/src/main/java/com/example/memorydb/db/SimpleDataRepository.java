@@ -2,9 +2,9 @@ package com.example.memorydb.db;
 
 import com.example.memorydb.entity.Entity;
 import com.example.memorydb.user.model.UserEntity;
-import jakarta.annotation.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class SimpleDataRepository<T extends Entity, ID extends Long> implements DataRepository<T, ID> {
     private ArrayList<T> dataList = new ArrayList<T>();
@@ -52,7 +52,9 @@ public abstract class SimpleDataRepository<T extends Entity, ID extends Long> im
 
     @Override
     public List<T> findAll() {
-        return dataList.stream().sorted(sort).toList();
+        return dataList.stream()
+                .sorted(sort)
+                .collect(Collectors.toList());
     }
 
 
