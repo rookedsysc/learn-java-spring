@@ -2,10 +2,8 @@ package com.example.memorydb.user.service;
 
 import com.example.memorydb.user.db.UserRepository;
 import com.example.memorydb.user.model.UserEntity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +28,18 @@ public class UserService {
     }
 
     public List<UserEntity> findAllScoreGreaterThen(Integer score) {
-        return null;
-//        return userRepository.findAllScoreGreaterThen(score);
+        return userRepository.findAllByScoreGreaterThan(score);
     }
+
+    public List<UserEntity> findAllByLowLessThanEqualAndHighGreaterThanEqual(Integer high, Integer low) {
+        return userRepository.findAllByScoreLessThanEqualAndScoreGreaterThanEqual(high, low);
+    }
+
+    public List<UserEntity> scoreBetween(Integer high, Integer low) {
+        return userRepository.scoreBetween(high, low);
+    }
+
+
 
     public Optional<UserEntity> findById(Long id) {
         return null;

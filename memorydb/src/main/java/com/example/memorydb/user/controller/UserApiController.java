@@ -36,11 +36,29 @@ public class UserApiController {
     }
 
     @GetMapping("/score")
-    public List<UserEntity> filteredByScore(
+    public List<UserEntity> scoreBetween(
             @RequestParam Integer score
     ) {
         return userService.findAllScoreGreaterThen(score);
     }
+
+    @GetMapping("/min-max")
+    public List<UserEntity> scoreBetween(
+            @RequestParam Integer low,
+            @RequestParam Integer high
+    ) {
+        return userService.findAllByLowLessThanEqualAndHighGreaterThanEqual(high, low);
+    }
+
+    @GetMapping("/min-max2")
+    public List<UserEntity> scoreBetween2 (
+            @RequestParam Integer low,
+            @RequestParam Integer high
+    ) {
+        return userService.scoreBetween(high, low);
+    }
+
+
 
     @GetMapping("/find/{id}")
     public UserEntity findById(
