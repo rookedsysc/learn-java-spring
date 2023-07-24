@@ -20,7 +20,7 @@ public class BookService {
     }
 
     public void delete(Long id) {
-        repo.delete(id);
+//        repo.delete(id);
     }
 
     public List<BookEntity> findAll() {
