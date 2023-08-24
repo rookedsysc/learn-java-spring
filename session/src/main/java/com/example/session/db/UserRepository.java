@@ -1,6 +1,9 @@
 package com.example.session.db;
 
 import com.example.session.model.UserDto;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Repository
 public class UserRepository {
   private List<UserDto> userList = new ArrayList<>();
 

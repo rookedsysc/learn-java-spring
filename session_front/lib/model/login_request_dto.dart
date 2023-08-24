@@ -1,13 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'login_request.g.dart';
+part 'login_request_dto.g.dart';
 
 @JsonSerializable()
-class LoginRequest {
+class LoginRequestDto {
   final String id;
   final String password;
 
-  LoginRequest({
+  LoginRequestDto({
     required this.id,
     required this.password,
   });
@@ -16,8 +16,13 @@ class LoginRequest {
     String? id,
     String? password,
   }) =>
-      LoginRequest(
+      LoginRequestDto(
         id: id ?? this.id,
         password: password ?? this.password,
       );
+
+  factory LoginRequestDto.fromJson(Map<String, dynamic> json) =>
+      _$LoginRequestDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LoginRequestDtoToJson(this);
 }

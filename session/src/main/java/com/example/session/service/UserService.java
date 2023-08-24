@@ -2,7 +2,10 @@ package com.example.session.service;
 
 import com.example.session.db.UserRepository;
 import com.example.session.model.LoginRequest;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -10,7 +13,8 @@ import javax.servlet.http.HttpSession;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-  private UserRepository userRepository;
+
+  private final UserRepository userRepository;
 
   public void login(LoginRequest loginRequest, HttpSession httpSession) {
     var id = loginRequest.getId();

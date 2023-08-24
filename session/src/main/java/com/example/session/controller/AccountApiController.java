@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/auth")
 public class AccountApiController {
 
   private final UserService userService;

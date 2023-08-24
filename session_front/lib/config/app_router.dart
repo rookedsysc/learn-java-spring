@@ -40,4 +40,3 @@ GoRoute _loginPage({required List<GoRoute> routes}) {
     routes: routes,
   );
 }
-
