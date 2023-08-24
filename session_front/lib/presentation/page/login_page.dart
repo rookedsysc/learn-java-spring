@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:session_front/common/widget/input_form.dart';
 import 'package:session_front/common/widget/padding_factory.dart';
+import 'package:session_front/controller/provider/login_request_provider.dart';
+import 'package:session_front/controller/service/auth_service.dart';
+import 'package:session_front/model/login_request_dto.dart';
 
 final GlobalKey<FormState> _loginPageFormKey = GlobalKey<FormState>();
 
@@ -21,21 +25,14 @@ class LoginPage extends StatelessWidget {
       ),
       body: Form(
         key: _loginPageFormKey,
-        child: SingleChildScrollView(
+        child: const SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _IdForm(),
               _PasswordForm(),
-              PaddingFactory.createAll(
-                child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Save",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    )),
-              ),
+              _LoginButton(),
             ],
           ),
         ),
@@ -44,12 +41,15 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class _IdForm extends StatelessWidget {
+class _IdForm extends ConsumerWidget {
   const _IdForm({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return PlainTextForm(
+      onSaved: (newValue) {
+        ref.read(loginRequestProvider.notifier).input(id: newValue!);
+      },
       validator: (value) {
         if (value!.isEmpty) {
           return "ID is empty";
@@ -62,12 +62,15 @@ class _IdForm extends StatelessWidget {
   }
 }
 
-class _PasswordForm extends StatelessWidget {
+class _PasswordForm extends ConsumerWidget {
   const _PasswordForm({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return PlainTextForm(
+      onSaved: (newValue) {
+        ref.read(loginRequestProvider.notifier).input(password: newValue!);
+      },
       validator: (value) {
         if (value!.isEmpty) {
           return "Password is empty";
@@ -76,7 +79,27 @@ class _PasswordForm extends StatelessWidget {
       },
       title: "Password",
     );
-
   }
 }
 
+class _LoginButton extends ConsumerWidget {
+  const _LoginButton({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return PaddingFactory.createAll(
+      child: ElevatedButton(
+          onPressed: () {
+            if (_loginPageFormKey.currentState!.validate()) {
+              _loginPageFormKey.currentState!.save();
+              final LoginRequestDto request = ref.read(loginRequestProvider);
+              ref.read(authServiceProvider).login(request);
+            }
+          },
+          child: Text(
+            "Login",
+            style: Theme.of(context).textTheme.bodyMedium,
+          )),
+    );
+  }
+}

@@ -36,6 +36,7 @@ dependencies:
   go_router: ^8.0.3
   dio: ^5.3.0
   retrofit: ^4.0.1
+  json_annotation: ^4.8.1
   intl: 0.18.0
 
 
@@ -51,7 +52,7 @@ dev_dependencies:
   build_runner: ^2.4.4
   isar_generator: ^3.1.0+1
   json_serializable: ^6.7.1
-
+  retrofit_generator: '>=5.0.0 <6.0.0'
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
