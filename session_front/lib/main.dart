@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:session_front/app_router.dart';
-import 'package:session_front/theme.dart';
+import 'package:session_front/config/app_router.dart';
+import 'package:session_front/config/theme.dart';
 
 void main() {
   runApp(const ProviderScope(child: App()));
