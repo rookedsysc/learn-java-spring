@@ -37,6 +37,11 @@ public class UserService {
         // -1을 주면 세션이 유지되는 동안만 사용하는 것이다.
         cookie.setMaxAge(-1);
 
+        // JS에서 임의로 Cookie를 읽을 수 없다.
+        cookie.setHttpOnly(true);
+        // Https에서만 Cookie를 사용할 수 있다.
+        // cookie.setSecure(true);
+
         httpServletResponse.addCookie(cookie);
       }
 
