@@ -17,5 +17,14 @@ class CustomInterceptor extends Interceptor {
     debugPrint("path : ${options.uri} data : ${options.data.toString()}\n");
     return super.onRequest(options, handler);
   }
+
+  @override
+  void onResponse(
+    Response response,
+    ResponseInterceptorHandler handler,
+  ) {
+    debugPrint("path : ${response.requestOptions.uri} data : ${response.data.toString()}\n");
+    return super.onResponse(response, handler);
+  }
 }
 

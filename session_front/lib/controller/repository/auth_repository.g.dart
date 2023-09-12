@@ -21,24 +21,28 @@ class _AuthRepository implements AuthRepository {
   String? baseUrl;
 
   @override
-  Future<void> login(request) async {
+  Future<HttpResponse<dynamic>> login(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    await _dio.fetch<void>(_setStreamType<void>(Options(
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
@@ -54,3 +58,25 @@ class _AuthRepository implements AuthRepository {
     return requestOptions;
   }
 }
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$authServiceHash() => r'b4198da64c72901cad03c9fa055a2d2556cf0822';
+
+/// See also [AuthService].
+@ProviderFor(AuthService)
+final authServiceProvider =
+    AutoDisposeNotifierProvider<AuthService, AuthRepository>.internal(
+  AuthService.new,
+  name: r'authServiceProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$authServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$AuthService = AutoDisposeNotifier<AuthRepository>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
