@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:session_front/controller/provider/dio_provider.dart';
@@ -17,10 +16,13 @@ class AuthService extends _$AuthService {
   }
 }
 
-@RestApi(baseUrl: "http://localhost:8080/api/auth")
+@RestApi(baseUrl: "http://localhost:8080/api/account")
 abstract class AuthRepository {
   factory AuthRepository(Dio dio, {String baseUrl}) = _AuthRepository;
 
   @POST("/login")
   Future<HttpResponse<dynamic>> login(@Body() LoginRequestDto request);
+
+  @POST("/user_id")
+  Future<HttpResponse<String>> headerLogin(@Body() LoginRequestDto request);
 }
