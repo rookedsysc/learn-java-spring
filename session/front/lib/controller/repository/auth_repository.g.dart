@@ -13,7 +13,7 @@ class _AuthRepository implements AuthRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:8080/api/auth';
+    baseUrl ??= 'http://localhost:8080/api/account';
   }
 
   final Dio _dio;
@@ -41,6 +41,31 @@ class _AuthRepository implements AuthRepository {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<String>> headerLogin(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result =
+        await _dio.fetch<String>(_setStreamType<HttpResponse<String>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/user_id',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
