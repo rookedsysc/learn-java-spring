@@ -1,4 +1,4 @@
-version: "3"
+version: "1"
 services:
   db:
     image: mysql:8.0.33
@@ -8,12 +8,12 @@ services:
       # 인코딩 설정
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-    container_name: mysql
+    container_name: delivery-mysql
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_DATABASE=mydb
-      - MYSQL_ROOT_PASSWORD=!Qhdkscjfwj12#$
+      - MYSQL_DATABASE=delivery
+      - MYSQL_ROOT_PASSWORD=!df159357
       - TZ-Asia/Seoul
     volumes:
-      - /Users/rookedsysc/Documents/Mysql/Testsql
+      - /Users/rookedsysc/Documents/Mysql/delivery-mysql
