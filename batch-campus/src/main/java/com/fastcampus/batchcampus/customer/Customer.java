@@ -2,6 +2,7 @@ package com.fastcampus.batchcampus.customer;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Generated;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @ToString
 public class Customer {
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
   private String email;
@@ -36,4 +38,11 @@ public class Customer {
     NORMAL, DORMANT;
   }
 
+  public void setLoginAt(LocalDateTime loginAt) {
+    this.loginAt = loginAt;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 }
