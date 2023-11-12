@@ -7,7 +7,10 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-    var redisList = new RedisList();
-    redisList.run();
+    // var redisList = new RedisList();
+    // redisList.run();
+
+    var redisSet = new RedisSet();
+    redisSet.run();
   }
 }
