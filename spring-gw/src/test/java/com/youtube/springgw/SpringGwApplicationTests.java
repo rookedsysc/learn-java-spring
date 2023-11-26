@@ -1,10 +1,10 @@
-package com.benit.svc1;
+package com.youtube.springgw;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Svc1ApplicationTests {
+class SpringGwApplicationTests {
 
   @Test
   void contextLoads() {

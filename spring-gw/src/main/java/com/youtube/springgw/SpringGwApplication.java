@@ -1,13 +1,13 @@
-package com.benit.svc1;
+package com.youtube.springgw;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Svc1Application {
+public class SpringGwApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(Svc1Application.class, args);
+    SpringApplication.run(SpringGwApplication.class, args);
   }
 
 }
