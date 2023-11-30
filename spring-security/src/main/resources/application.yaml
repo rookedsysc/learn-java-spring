@@ -1,0 +1,8 @@
+server:
+  name: spring-security
+
+spring:
+  security:
+    user:
+      name: user
+      password: 1234
