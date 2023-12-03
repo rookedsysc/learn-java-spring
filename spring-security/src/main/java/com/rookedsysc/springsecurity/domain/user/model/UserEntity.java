@@ -23,5 +23,9 @@ public class UserEntity {
   @Column(nullable = false, length = 100)
   private String password;
   @Enumerated(EnumType.STRING)
-  private String role;
+  private UserRole role;
+
+  public void setRole(UserRole role) {
+    this.role = role;
+  }
 }

@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/open-api")
+@RequestMapping("/open-api/v1/users")
 public class UserOpenApiController {
 
   private final UserBusiness userBusiness;
 
-  @PostMapping("/register")
+  @PostMapping("/join")
   public UserDto save(@RequestBody UserDto userDto) {
     return userBusiness.save(userDto);
   }
