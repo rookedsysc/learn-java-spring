@@ -94,7 +94,7 @@ public class JwtTokenHelper implements TokenHelperIfs {
         throw new ApiException(TokenError.EXPIRED_TOKEN, e);
       } else {
         ///# 알 수 없는 에러
-        throw new ApiException(TokenError.TOEKN_EXCEPTION, e);
+        throw new ApiException(TokenError.TOKEN_EXCEPTION, e);
       }
     }
   }
