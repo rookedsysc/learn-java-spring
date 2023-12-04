@@ -1,5 +1,8 @@
 package com.rookedsysc.springsecurity.domain.user.business;
 
+import com.rookedsysc.springsecurity.domain.token.business.TokenBusiness;
+import com.rookedsysc.springsecurity.domain.token.helper.JwtTokenHelper;
+import com.rookedsysc.springsecurity.domain.token.model.TokenResponse;
 import com.rookedsysc.springsecurity.domain.user.converter.UserConverter;
 import com.rookedsysc.springsecurity.domain.user.model.UserDto;
 import com.rookedsysc.springsecurity.domain.user.model.UserEntity;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserBusiness {
   private final UserConverter userConverter;
   private final UserService userService;
+  private final TokenBusiness tokenBusiness;
   @Autowired
   private PasswordEncoder passwordEncoder;
 
@@ -31,7 +35,13 @@ public class UserBusiness {
     return userConverter.toDto(userEntity);
   }
 
-  public UserDto findByEmailOrThrow(String email) {
-    return userConverter.toDto(userService.findByEmailOrThrow(email));
+  public TokenResponse login(UserDto userDto) {
+    UserEntity savedUser = userService.findByEmailOrThrow(userDto.getEmail());
+    if (!passwordEncoder.matches(userDto.getPassword(), savedUser.getPassword())) {
+      throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+    }
+
+    var tokenResponse = tokenBusiness.issueToken(savedUser);
+    return tokenResponse;
   }
 }

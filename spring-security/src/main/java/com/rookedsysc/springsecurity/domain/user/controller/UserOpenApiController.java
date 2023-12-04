@@ -1,5 +1,6 @@
 package com.rookedsysc.springsecurity.domain.user.controller;
 
+import com.rookedsysc.springsecurity.domain.token.model.TokenResponse;
 import com.rookedsysc.springsecurity.domain.user.business.UserBusiness;
 import com.rookedsysc.springsecurity.domain.user.model.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +19,10 @@ public class UserOpenApiController {
   @PostMapping("/join")
   public UserDto save(@RequestBody UserDto userDto) {
     return userBusiness.save(userDto);
+  }
+
+  @PostMapping("/login")
+  public TokenResponse login(@RequestBody UserDto userDto) {
+    return userBusiness.login(userDto);
   }
 }
