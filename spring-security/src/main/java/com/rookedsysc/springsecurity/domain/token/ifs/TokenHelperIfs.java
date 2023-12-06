@@ -1,5 +1,6 @@
 package com.rookedsysc.springsecurity.domain.token.ifs;
 
+import com.rookedsysc.springsecurity.domain.token.model.RefreshToken;
 import com.rookedsysc.springsecurity.domain.token.model.TokenDto;
 
 import java.util.Map;

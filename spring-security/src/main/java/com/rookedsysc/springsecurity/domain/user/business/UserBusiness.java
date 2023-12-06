@@ -1,7 +1,6 @@
 package com.rookedsysc.springsecurity.domain.user.business;
 
 import com.rookedsysc.springsecurity.domain.token.business.TokenBusiness;
-import com.rookedsysc.springsecurity.domain.token.helper.JwtTokenHelper;
 import com.rookedsysc.springsecurity.domain.token.model.TokenResponse;
 import com.rookedsysc.springsecurity.domain.user.converter.UserConverter;
 import com.rookedsysc.springsecurity.domain.user.model.UserDto;
@@ -44,6 +43,7 @@ public class UserBusiness {
     }
 
     var tokenResponse = tokenBusiness.issueToken(savedUser);
+
     return tokenResponse;
   }
 

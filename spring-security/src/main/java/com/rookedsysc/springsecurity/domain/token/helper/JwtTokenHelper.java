@@ -3,7 +3,9 @@ package com.rookedsysc.springsecurity.domain.token.helper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rookedsysc.springsecurity.common.exception.ApiException;
 import com.rookedsysc.springsecurity.common.error.TokenError;
+import com.rookedsysc.springsecurity.common.utils.IpUtil;
 import com.rookedsysc.springsecurity.domain.token.ifs.TokenHelperIfs;
+import com.rookedsysc.springsecurity.domain.token.model.RefreshToken;
 import com.rookedsysc.springsecurity.domain.token.model.TokenDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -104,7 +106,6 @@ public class JwtTokenHelper implements TokenHelperIfs {
     claims.put("email", email);
     return claims;
   }
-
 
   public static String getUserEmail(String token, String secretKey) {
     return Jwts.parserBuilder()
