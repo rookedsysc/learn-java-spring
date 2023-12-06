@@ -24,10 +24,10 @@ public class TokenBusiness {
    */
   public TokenResponse issueToken(UserEntity userEntity) {
     return Optional.ofNullable(userEntity).map(ue -> {
-      var userId = ue.getId();
+      var email = ue.getEmail();
 
-      var accessToken = tokenService.issueAccessToken(userId);
-      var refreshToken = tokenService.issueRefreshToken(userId);
+      var accessToken = tokenService.issueAccessToken(email);
+      var refreshToken = tokenService.issueRefreshToken(email);
 
       return tokenConverter.toResponse(accessToken, refreshToken);
     }).orElseThrow(()-> new ApiException(TokenError.TOKEN_EXCEPTION));

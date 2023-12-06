@@ -1,9 +1,11 @@
 package com.rookedsysc.springsecurity.domain.token.helper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rookedsysc.springsecurity.common.exception.ApiException;
 import com.rookedsysc.springsecurity.common.error.TokenError;
 import com.rookedsysc.springsecurity.domain.token.ifs.TokenHelperIfs;
 import com.rookedsysc.springsecurity.domain.token.model.TokenDto;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,9 +29,8 @@ public class JwtTokenHelper implements TokenHelperIfs {
   @Value("${token.refresh-token.plus-hour}")
   private Long refreshTokenPlusHour;
 
-
   @Override
-  public TokenDto issueAccessToken(Map<String, Object> data) {
+  public TokenDto issueAccessToken(String email) {
     var expiredAtLocalDateTime = LocalDateTime.now()
         .plusHours(accessTokenPlushHour);
     var expiredAt = Date.from(expiredAtLocalDateTime.atZone(ZoneId.systemDefault())
@@ -39,7 +40,7 @@ public class JwtTokenHelper implements TokenHelperIfs {
     // 토큰 생성
     var jwtToken = Jwts.builder()
         .signWith(keys, SignatureAlgorithm.HS256)
-        .setClaims(data)
+        .setClaims(makeEmailClaims(email))
         .setExpiration(expiredAt)
         .compact();
 
@@ -50,7 +51,7 @@ public class JwtTokenHelper implements TokenHelperIfs {
   }
 
   @Override
-  public TokenDto issueRefreshToken(Map<String, Object> data) {
+  public TokenDto issueRefreshToken(String email) {
     var expiredAtLocalDateTime = LocalDateTime.now()
         .plusHours(refreshTokenPlusHour);
     var expiredAt = Date.from(expiredAtLocalDateTime.atZone(ZoneId.systemDefault())
@@ -60,7 +61,7 @@ public class JwtTokenHelper implements TokenHelperIfs {
     // 토큰 생성
     var jwtToken = Jwts.builder()
         .signWith(keys, SignatureAlgorithm.HS256)
-        .setClaims(data)
+        .setClaims(makeEmailClaims(email))
         .setExpiration(expiredAt)
         .compact();
 
@@ -77,7 +78,6 @@ public class JwtTokenHelper implements TokenHelperIfs {
     var parser = Jwts.parserBuilder()
         .setSigningKey(key)
         .build();
-
 
     try {
       var result = parser.parseClaimsJws(token);
@@ -97,5 +97,21 @@ public class JwtTokenHelper implements TokenHelperIfs {
         throw new ApiException(TokenError.TOKEN_EXCEPTION, e);
       }
     }
+  }
+
+  private Claims makeEmailClaims(String email) {
+    Claims claims = Jwts.claims();
+    claims.put("email", email);
+    return claims;
+  }
+
+
+  public static String getUserEmail(String token, String secretKey) {
+    return Jwts.parserBuilder()
+        .setSigningKey(secretKey.getBytes())
+        .build()
+        .parseClaimsJws(token)
+        .getBody()
+        .get("email", String.class);
   }
 }

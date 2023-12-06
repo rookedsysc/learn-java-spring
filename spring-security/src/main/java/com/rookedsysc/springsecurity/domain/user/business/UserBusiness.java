@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserBusiness {
@@ -43,5 +45,10 @@ public class UserBusiness {
 
     var tokenResponse = tokenBusiness.issueToken(savedUser);
     return tokenResponse;
+  }
+
+  public List<UserDto> getAllUsers() {
+    List<UserEntity> userEntities = userService.getAllUsers();
+    return userConverter.toDto(userEntities);
   }
 }

@@ -16,17 +16,13 @@ public class TokenService {
   private final TokenHelperIfs tokenHelperInterface;
 
   // 토큰 발급
-  public TokenDto issueAccessToken(Long userId) {
-    var data = new HashMap<String, Object>();
-    data.put("userId", userId);
-    return tokenHelperInterface.issueAccessToken(data);
+  public TokenDto issueAccessToken(String email) {
+    return tokenHelperInterface.issueAccessToken(email);
   }
 
   // 리프레쉬 토큰 발급
-  public TokenDto issueRefreshToken(Long userId) {
-    var data = new HashMap<String, Object>();
-    data.put("userId", userId);
-    return tokenHelperInterface.issueRefreshToken(data);
+  public TokenDto issueRefreshToken(String email) {
+    return tokenHelperInterface.issueRefreshToken(email);
   }
 
   // 토큰 to User ID
