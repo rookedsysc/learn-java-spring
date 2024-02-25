@@ -17,6 +17,10 @@ public class ProductService {
         );
     }
 
+    public void deleteAll() {
+        productRepo.deleteAll();
+    }
+
     public Product save(Product product) {
         return productRepo.save(product);
     }

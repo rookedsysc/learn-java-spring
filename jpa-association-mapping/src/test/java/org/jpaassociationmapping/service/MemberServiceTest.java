@@ -60,19 +60,19 @@ class MemberServiceTest {
         assertNotEquals(member.getTeam().getName(), savedMember2.getTeam().getName());
     }
 
-    @Test
-    void PRODUCT_연관_단방향_테스트() {
-        // given
-        Product productA = Product.builder().id("productA").name("productA").build();
-        Product savedProduct = productService.save(productA);
-        Member member = Member.builder().id("memberA").username("memberA").build();
-        member.getProducts().add(productA);
-        Member savedMember = memberService.save(member);
-
-        // when
-        Member searchedMember = memberService.findByUserName(savedMember.getUsername());
-
-        // then
-        assertEquals(searchedMember.getProducts().get(0).getId(), savedProduct.getId());
-    }
+//    @Test
+//    void PRODUCT_연관_단방향_테스트() {
+//        // given
+//        Product productA = Product.builder().id("productA").name("productA").build();
+//        Product savedProduct = productService.save(productA);
+//        Member member = Member.builder().id("memberA").username("memberA").build();
+//        member.getProducts().add(productA);
+//        Member savedMember = memberService.save(member);
+//
+//        // when
+//        Member searchedMember = memberService.findByUserName(savedMember.getUsername());
+//
+//        // then
+//        assertEquals(searchedMember.getProducts().get(0).getId(), savedProduct.getId());
+//    }
 }

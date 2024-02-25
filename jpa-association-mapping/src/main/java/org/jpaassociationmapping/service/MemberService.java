@@ -17,4 +17,8 @@ public class MemberService {
     public Member findByUserName(String userName) {
         return memberRepo.findTop1ByUsername(userName);
     }
+
+    public void deleteAll() {
+        memberRepo.deleteAll();
+    }
 }

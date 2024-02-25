@@ -24,14 +24,9 @@ public class Member {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
-    @ManyToMany
     @Builder.Default
-    @JoinTable(
-            name = "MEMBER_PRODUCT",
-            joinColumns = @JoinColumn(name = "MEMBER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID")
-    )
-    private List<Product> products = new ArrayList<Product>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
+    private List<Order> orders = new ArrayList<Order>();
 
     public void setTeam(Team team) {
         this.team = team;
