@@ -18,12 +18,6 @@ public class Team {
     private String name;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Member> members = new ArrayList<Member>();
-
-    public void addMember(Member member) {
-        if(this.members == null) {
-            this.members = new ArrayList<Member>();
-        }
-        this.members.add(member);
-    }
 }

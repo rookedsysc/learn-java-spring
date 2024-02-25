@@ -53,11 +53,9 @@ class TeamServiceTest {
         // given
         Team teamA = Team.builder().id("팀A").name("팀A").build();
         Team savedTeam = teamService.save(teamA);
-        Member member = Member.builder().id("memberA").username("memberA").team(teamA).build();
-        savedTeam.addMember(member);
+        Member member = Member.builder().id("memberA").username("memberA").build();
+        member.setTeam(savedTeam);
         Member savedMember = memberService.save(member);
-        savedTeam = teamService.save(savedTeam);
-
 
         // when
         Team searchedTeam = teamService.findByName(savedTeam.getName());
