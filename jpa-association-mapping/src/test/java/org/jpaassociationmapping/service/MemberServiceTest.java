@@ -55,21 +55,4 @@ class MemberServiceTest {
         assertEquals(savedMember2.getTeam().getName(), member2.getTeam().getName());
         assertNotEquals(member.getTeam().getName(), savedMember2.getTeam().getName());
     }
-
-    @Test
-    void 팀_삭제시_멤버_조회() {
-        // given
-        Team teamA = Team.builder().id("팀A").name("팀A").build();
-        teamService.save(teamA);
-        Member member = Member.builder().id("memberA").username("memberA").team(teamA).build();
-        Member savedMember = memberService.save(member);
-
-        // when
-        teamService.delete(teamA);
-
-        // then
-        assert
-        Member member2 = memberService.findByUserName(member.getUsername());
-        System.out.println(member2);
-    }
 }
