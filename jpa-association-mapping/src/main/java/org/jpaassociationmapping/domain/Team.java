@@ -1,5 +1,6 @@
 package org.jpaassociationmapping.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,8 @@ public class Team {
     private String id;
     private String name;
 
-    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "team", cascade = CascadeType.MERGE)
     @Builder.Default
+    @JsonIgnore
     private List<Member> members = new ArrayList<Member>();
 }
