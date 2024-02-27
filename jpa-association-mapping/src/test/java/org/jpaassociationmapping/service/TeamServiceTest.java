@@ -63,4 +63,25 @@ class TeamServiceTest {
         // then
         assertEquals(savedMember.getUsername(), searchedTeam.getMembers().get(0).getUsername());
     }
+
+    @Test
+    void MEMBER_영속성전이_테스트() {
+        // given
+        Team teamA = Team.builder().id("팀A").name("팀A").build();
+        // 현재 시간을 String으로 변환
+        String time = String.valueOf(System.currentTimeMillis());
+        // 어제 시간을 String으로 변환
+        String yesterday = String.valueOf(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+        Member m1 = Member.builder().username(time).id(time).build();
+        Member m2 = Member.builder().username(yesterday).id(yesterday).build();
+        m1.setTeam(teamA);
+        m2.setTeam(teamA);
+
+        // when
+        teamService.save(teamA);
+
+        // then
+        assertEquals(m1.getUsername(), memberService.findByUserName(m1.getUsername()).getUsername());
+        assertEquals(m2.getUsername(), memberService.findByUserName(m2.getUsername()).getUsername());
+    }
 }
