@@ -15,11 +15,12 @@ public class JavaThreadApplication {
 
         Runnable task = () -> {
             try {
-                for(int i=0; i<5; i++) {
+                while (true) {
                     System.out.println("Hello, MyThread3");
                     Thread.sleep(500); // miliseconds, 0.5초
                 }
             } catch (InterruptedException e) {
+                // 2. 여기도 실행이 됨
                 System.out.println("Thread interrupted");
             }
         };
@@ -27,12 +28,13 @@ public class JavaThreadApplication {
         myThread3.start();
 
         try {
-            // thread는 wait()이 아니라 join()을 사용해서 대기한다.
-            myThread3.join(); // myThread3이 종료될 때까지 대기
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
-            System.out.println("Thread interrupted");
+            throw new RuntimeException(e);
         }
-
-        System.out.println("Task Thread is Done");
+        // stop은 deprecated 되었다. (동시성 문제로 인해서)
+        myThread3.interrupt();
+        // 1. 여기 실행한 후에
+        System.out.println("Task Thread is Interrupted");
     }
 }
