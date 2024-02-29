@@ -9,6 +9,9 @@ public class JavaThreadApplication {
         MyThread1 myThread1 = new MyThread1();
         myThread1.start();
         System.out.println("Hello, My Child");
+
+        Thread myThread2 = new Thread(new MyThread2());
+        myThread2.start();
     }
 
 }
