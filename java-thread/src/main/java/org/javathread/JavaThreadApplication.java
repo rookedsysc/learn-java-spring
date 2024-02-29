@@ -12,6 +12,18 @@ public class JavaThreadApplication {
 
         Thread myThread2 = new Thread(new MyThread2());
         myThread2.start();
-    }
 
+        Runnable task = () -> {
+            try {
+                while (true) {
+                    System.out.println("Hello, MyTask");
+                    Thread.sleep(500); // miliseconds, 0.5초
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted");
+            }
+        };
+        Thread myThread3 = new Thread(task);
+        myThread3.start();
+    }
 }
