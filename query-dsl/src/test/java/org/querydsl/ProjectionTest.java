@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.querydsl.dto.MemberDto;
+import org.querydsl.dto.QMemberDto;
 import org.querydsl.entity.Member;
 import org.querydsl.entity.Team;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -97,5 +98,11 @@ public class ProjectionTest {
         }
     }
 
-
+    @Test
+    @DisplayName("Query Projection 테스트")
+    void queryProjection() {
+        List<MemberDto> result= queryFactory.select(new QMemberDto(member.username, member.age))
+                .from(member)
+                .fetch();
+    }
 }
