@@ -21,13 +21,6 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         queryFactory = new JPAQueryFactory(em);
     }
 
-    public List<Member> searchAllMembers() {
-        return queryFactory
-                .selectFrom(member)
-                .leftJoin(member.team, team)
-                .fetch();
-    }
-
     @Override
     public List<MemberTeamDto> search(MemberSearchCondition condition) {
         return queryFactory
