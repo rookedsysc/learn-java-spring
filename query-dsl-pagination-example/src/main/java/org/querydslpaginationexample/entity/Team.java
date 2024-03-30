@@ -17,10 +17,17 @@ public class Team {
     @Column(name = "team_id")
     private Long id;
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 
     public Team(String name) {
         this.name = name;
+    }
+
+    public void addMembers(List<Member> members) {
+        for (Member member : members) {
+            this.members.add(member);
+            member.changeTeam(this);
+        }
     }
 }
