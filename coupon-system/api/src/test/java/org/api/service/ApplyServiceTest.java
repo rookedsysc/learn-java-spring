@@ -30,7 +30,7 @@ class ApplyServiceTest {
      * race condition 발생하는 예시
      */
     @Test
-    void 여러_쓰레드에서_1000명_동시에_응모() throws InterruptedException {
+    void Redis_활용해서_수정_후_RaceCondition발생X() throws InterruptedException {
         int threadCount = 1000;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
