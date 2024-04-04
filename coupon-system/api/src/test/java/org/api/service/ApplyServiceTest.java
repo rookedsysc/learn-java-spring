@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -16,11 +21,30 @@ class ApplyServiceTest {
     private CouponRepository couponRepository;
 
     @Test
-    public void 한번만응모() {
+    void 한번만응모() {
         applyService.apply(1L);
         assertEquals(1, couponRepository.count());
     }
 
+    /**
+     * race condition 발생하는 예시
+     */
+    @Test
+    void 여러_쓰레드에서_1000명_동시에_응모() throws InterruptedException {
+        int threadCount = 1000;
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch latch = new CountDownLatch(threadCount);
 
+        for (int i = 0; i < threadCount; i++) {
+            long userId = i;
+            executorService.submit(() -> {
+                applyService.apply(userId);
+                latch.countDown();
+            });
+        }
+        latch.await();
 
+        long count = couponRepository.count();
+        assertThat(count).isEqualTo(100);
+    }
 }
