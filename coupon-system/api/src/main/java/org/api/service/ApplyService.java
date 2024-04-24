@@ -1,6 +1,7 @@
 package org.api.service;
 
 import org.api.domain.entity.Coupon;
+import org.api.producer.CouponCreateProducer.CouponCreateProducer;
 import org.api.repository.CouponCountRepository;
 import org.api.repository.CouponRepository;
 import org.springframework.stereotype.Service;
@@ -9,10 +10,12 @@ import org.springframework.stereotype.Service;
 public class ApplyService {
     private final CouponRepository couponRepository;
     private final CouponCountRepository couponCountRepository;
+    private final CouponCreateProducer couponCreateProducer;
 
-    public ApplyService(CouponRepository couponRepository, CouponCountRepository couponCountRepository) {
+    public ApplyService(CouponCreateProducer couponCreateProducer,CouponRepository couponRepository, CouponCountRepository couponCountRepository) {
         this.couponCountRepository = couponCountRepository;
         this.couponRepository = couponRepository;
+        this.couponCreateProducer = couponCreateProducer;
     }
 
     /**
@@ -24,6 +27,6 @@ public class ApplyService {
         if (count > 100) {
             return;
         }
-        couponRepository.save(new Coupon(userId));
+        couponCreateProducer.create(userId);
     }
 }

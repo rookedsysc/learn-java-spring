@@ -1,5 +1,6 @@
 package org.api.repository;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -7,8 +8,15 @@ import org.springframework.stereotype.Repository;
 public class CouponCountRepository {
     private final RedisTemplate<String, Integer> redisTemplate;
 
-    public CouponCountRepository(RedisTemplate redisTemplate) {
+    public CouponCountRepository(@Qualifier("stringRedisTemplate") RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
+    }
+
+    public void flushAll() {
+        redisTemplate.getConnectionFactory()
+                .getConnection()
+                .serverCommands()
+                .flushAll();
     }
 
     public Long increment() {
