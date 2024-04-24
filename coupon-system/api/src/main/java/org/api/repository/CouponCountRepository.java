@@ -12,6 +12,13 @@ public class CouponCountRepository {
         this.redisTemplate = redisTemplate;
     }
 
+    public void flushAll() {
+        redisTemplate.getConnectionFactory()
+                .getConnection()
+                .serverCommands()
+                .flushAll();
+    }
+
     public Long increment() {
         return redisTemplate.
                 opsForValue().

@@ -1,5 +1,6 @@
 package org.api.service;
 
+import org.api.repository.CouponCountRepository;
 import org.api.repository.CouponRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ class ApplyServiceTest {
     @Autowired
     private CouponRepository couponRepository;
 
+    @Autowired
+    private CouponCountRepository couponCountRepository;
+
     @Test
     void 한번만응모() {
         applyService.apply(1L);
@@ -30,7 +34,9 @@ class ApplyServiceTest {
      * race condition 발생하는 예시
      */
     @Test
-    void Redis_활용해서_수정_후_RaceCondition발생X() throws InterruptedException {
+    void 여러번_응모() throws InterruptedException {
+        couponCountRepository.flushAll();
+
         int threadCount = 1000;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
