@@ -30,12 +30,10 @@ class ApplyServiceTest {
         assertEquals(1, couponRepository.count());
     }
 
-    /**
-     * race condition 발생하는 예시
-     */
     @Test
     void 여러번_응모() throws InterruptedException {
         couponCountRepository.flushAll();
+        couponRepository.deleteAll();
 
         int threadCount = 1000;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
@@ -49,6 +47,9 @@ class ApplyServiceTest {
             });
         }
         latch.await();
+
+        // Thread sleep의 시간을 10초로 줌으로써 Consumer가 Coupon을 생성할 시간을 충분히 줌
+        Thread.sleep(10000);
 
         long count = couponRepository.count();
         assertThat(count).isEqualTo(100);
