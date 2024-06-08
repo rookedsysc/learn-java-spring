@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.i18ntest.jpajsonperformancemeasurement.application.JPAService;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostRequest;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostResponse;
+import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostVoteRatio;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteRequest;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteResponse;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +26,10 @@ public class JPAController {
             @RequestBody VoteRequest request
     ) {
         return service.vote(postId, request);
+    }
+
+    @GetMapping("/ratio/{postId}")
+    public PostVoteRatio postVoteRatio(@PathVariable(name = "postId") Long postId) {
+        return service.calculateVoteRatio(postId);
     }
 }
