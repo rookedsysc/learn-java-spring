@@ -1,10 +1,12 @@
 package org.i18ntest.jpajsonperformancemeasurement.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.i18ntest.jpajsonperformancemeasurement.common.JsonLongBooleanMapConverter;
 
 import java.util.HashMap;
 
+@Getter
 @Entity(name = "json_post")
 public class JSONPost {
     @Id
