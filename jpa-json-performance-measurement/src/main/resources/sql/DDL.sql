@@ -11,7 +11,7 @@ create table jpa_post (
 
 create table vote (
     id bigint not null,
-    vote int,
+    vote boolean,
     post_id bigint,
     primary key (id)
 );

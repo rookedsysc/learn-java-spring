@@ -7,6 +7,7 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Boolean vote;
     @ManyToOne
     @JoinColumn(nullable = false, name = "post_id")
     private JPAPost post;
