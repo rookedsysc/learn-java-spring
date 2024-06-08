@@ -14,4 +14,15 @@ public class JSONPost {
     private String content;
     @Convert(converter = JsonLongBooleanMapConverter.class)
     private HashMap<Long, Boolean> votes;
+
+    public HashMap<Long, Boolean> getVotes() {
+        if (votes == null) {
+            return new HashMap<>();
+        }
+        return this.votes;
+    }
+
+    public void setVotes(HashMap<Long, Boolean> newVotes) {
+        this.votes = newVotes;
+    }
 }
