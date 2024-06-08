@@ -2,7 +2,7 @@ package org.i18ntest.jpajsonperformancemeasurement.application;
 
 import lombok.RequiredArgsConstructor;
 import org.i18ntest.jpajsonperformancemeasurement.domain.JSONPost;
-import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteDto;
+import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteRequest;
 import org.i18ntest.jpajsonperformancemeasurement.repository.JSONPostRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class JSONVoteService {
         return repository.save(post);
     }
 
-    public JSONPost doVote(Long postId, VoteDto voteDto) {
+    public JSONPost doVote(Long postId, VoteRequest voteDto) {
         JSONPost post = repository.findById(postId)
                 .orElseThrow();
         HashMap<Long, Boolean> votes = post.getVotes();

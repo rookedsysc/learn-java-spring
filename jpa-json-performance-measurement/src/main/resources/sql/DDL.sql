@@ -9,8 +9,11 @@ create table jpa_post (
     primary key (id)
 );
 
+drop table vote;
+
 create table vote (
     id bigint not null,
+    member_id bigint,
     vote boolean,
     post_id bigint,
     primary key (id)
