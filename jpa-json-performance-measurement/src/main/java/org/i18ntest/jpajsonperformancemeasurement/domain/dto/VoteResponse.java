@@ -3,6 +3,8 @@ package org.i18ntest.jpajsonperformancemeasurement.domain.dto;
 import lombok.*;
 import org.i18ntest.jpajsonperformancemeasurement.domain.Vote;
 
+import java.util.HashMap;
+
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

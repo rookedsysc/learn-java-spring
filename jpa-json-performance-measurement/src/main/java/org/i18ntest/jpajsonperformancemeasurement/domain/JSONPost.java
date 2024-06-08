@@ -1,12 +1,15 @@
 package org.i18ntest.jpajsonperformancemeasurement.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 import org.i18ntest.jpajsonperformancemeasurement.common.JsonLongBooleanMapConverter;
 
 import java.util.HashMap;
 
 @Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity(name = "json_post")
 public class JSONPost {
     @Id

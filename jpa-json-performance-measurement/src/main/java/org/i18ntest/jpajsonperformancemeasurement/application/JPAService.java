@@ -1,7 +1,7 @@
 package org.i18ntest.jpajsonperformancemeasurement.application;
 
 import lombok.RequiredArgsConstructor;
-import org.i18ntest.jpajsonperformancemeasurement.controller.dto.JPAPostResponse;
+import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostResponse;
 import org.i18ntest.jpajsonperformancemeasurement.domain.JPAPost;
 import org.i18ntest.jpajsonperformancemeasurement.domain.Vote;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteRequest;
@@ -14,13 +14,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class JPAPostService {
+public class JPAService {
     private final JPAPostRepository postRepository;
     private final VoteRepository voteRepository;
 
-    public JPAPostResponse savePost(JPAPost post) {
+    public PostResponse savePost(JPAPost post) {
         JPAPost jpaPost = postRepository.save(post);
-        JPAPostResponse response = JPAPostResponse.fromEntity(jpaPost);
+        PostResponse response = PostResponse.fromEntity(jpaPost);
         return response;
     }
 
