@@ -28,4 +28,11 @@ public class JSONController {
     ) {
         return service.vote(postId, request);
     }
+
+//    @PostMapping("/huge-votes/{postId}")
+//    public void vote(
+//            @PathVariable(name = "postId") Long postId
+//    ) {
+//        service.vote(postId);
+//    }
 }

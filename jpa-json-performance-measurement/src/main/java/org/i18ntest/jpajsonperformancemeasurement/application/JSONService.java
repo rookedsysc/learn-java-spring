@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +31,30 @@ public class JSONService {
         votes.put(voteDto.memberId(), voteDto.vote());
         post.setVotes(votes);
         post = repository.save(post);
-        return post.getVotes().entrySet().stream()
-                        .map(e -> {
-                            return VoteResponse.builder()
-                                    .memberId(e.getKey())
-                                    .vote(e.getValue())
-                                    .build();
-                        })
+        return post.getVotes()
+                .entrySet()
+                .stream()
+                .map(e -> {
+                    return VoteResponse.builder()
+                            .memberId(e.getKey())
+                            .vote(e.getValue())
+                            .build();
+                })
                 .collect(Collectors.toList());
     }
+
+//    public void vote(Long postId) {
+//        JSONPost post = repository.findById(postId)
+//                .orElseThrow();
+//        int initialCapacity = (int) (10000000000L / 0.75 + 1);
+//        ConcurrentHashMap<Long, Boolean> votes = new ConcurrentHashMap<>(initialCapacity, 0.75f);
+//
+//        LongStream.rangeClosed(1, 10000000000L)
+//                .parallel()
+//                .forEach(i -> {
+//                    votes.put(i, (i % 2 == 0)); // 간단한 예로, 짝수는 true, 홀수는 false
+//                });
+//        post.setVotes(votes);
+//        post = repository.save(post);
+//    }
 }
