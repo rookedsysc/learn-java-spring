@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,7 @@ public class JSONService {
     public List<VoteResponse> vote(Long postId, VoteRequest voteDto) {
         JSONPost post = repository.findById(postId)
                 .orElseThrow();
-        HashMap<Long, Boolean> votes = post.getVotes();
+        ConcurrentHashMap<Long, Boolean> votes = post.getVotes();
         votes.put(voteDto.memberId(), voteDto.vote());
         post.setVotes(votes);
         post = repository.save(post);

@@ -4,6 +4,7 @@ import org.i18ntest.jpajsonperformancemeasurement.domain.JPAPost;
 import org.i18ntest.jpajsonperformancemeasurement.domain.JSONPost;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public record PostRequest(
         String title,
@@ -19,7 +20,7 @@ public record PostRequest(
         return JSONPost.builder()
                 .title(title)
                 .content(content)
-                .votes(new HashMap<>())
+                .votes(new ConcurrentHashMap<>())
                 .build();
     }
 }

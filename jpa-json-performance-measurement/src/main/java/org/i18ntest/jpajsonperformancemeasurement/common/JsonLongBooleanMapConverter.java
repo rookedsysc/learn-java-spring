@@ -7,15 +7,16 @@ import jakarta.persistence.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Converter
 @Component
-public class JsonLongBooleanMapConverter implements AttributeConverter<HashMap<Long, Boolean>, String> {
+public class JsonLongBooleanMapConverter implements AttributeConverter<ConcurrentHashMap<Long, Boolean>, String> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public String convertToDatabaseColumn(HashMap<Long, Boolean> attribute) {
+    public String convertToDatabaseColumn(ConcurrentHashMap<Long, Boolean> attribute) {
         if (attribute == null) {
             return null;
         }
@@ -27,12 +28,12 @@ public class JsonLongBooleanMapConverter implements AttributeConverter<HashMap<L
     }
 
     @Override
-    public HashMap<Long, Boolean> convertToEntityAttribute(String dbData) {
+    public ConcurrentHashMap<Long, Boolean> convertToEntityAttribute(String dbData) {
         if (dbData == null) {
-            return new HashMap<>();
+            return new ConcurrentHashMap<>();
         }
         try {
-            return objectMapper.readValue(dbData, new TypeReference<HashMap<Long, Boolean>>() {
+            return objectMapper.readValue(dbData, new TypeReference<ConcurrentHashMap<Long, Boolean>>() {
             });
         } catch (Exception e) {
             throw new RuntimeException("JSON reading error", e);

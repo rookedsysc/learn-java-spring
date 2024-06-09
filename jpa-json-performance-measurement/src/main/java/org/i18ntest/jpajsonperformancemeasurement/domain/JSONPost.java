@@ -5,6 +5,7 @@ import lombok.*;
 import org.i18ntest.jpajsonperformancemeasurement.common.JsonLongBooleanMapConverter;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Builder
@@ -18,16 +19,16 @@ public class JSONPost {
     private String title;
     private String content;
     @Convert(converter = JsonLongBooleanMapConverter.class)
-    private HashMap<Long, Boolean> votes;
+    private ConcurrentHashMap<Long, Boolean> votes;
 
-    public HashMap<Long, Boolean> getVotes() {
+    public ConcurrentHashMap<Long, Boolean> getVotes() {
         if (votes == null) {
-            return new HashMap<>();
+            return new ConcurrentHashMap<>();
         }
         return this.votes;
     }
 
-    public void setVotes(HashMap<Long, Boolean> newVotes) {
+    public void setVotes(ConcurrentHashMap<Long, Boolean> newVotes) {
         this.votes = newVotes;
     }
 }
