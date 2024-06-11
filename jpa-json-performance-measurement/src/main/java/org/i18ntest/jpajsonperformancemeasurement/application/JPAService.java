@@ -82,4 +82,12 @@ public class JPAService {
                 .collect(Collectors.toList());
         voteRepository.saveAll(votes);
     }
+
+    public List<PostResponse> all() {
+        List<JPAPost> posts = postRepository.findAll();
+        List<PostResponse> response = posts.stream().map(
+                PostResponse::fromEntity
+        ).toList();
+        return response;
+    }
 }

@@ -9,6 +9,8 @@ import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteRequest;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
+
 @RestController
 @RequestMapping("/jpa")
 @RequiredArgsConstructor
@@ -36,5 +38,10 @@ public class JPAController {
     @DeleteMapping("/all")
     public void deleteAll() {
         service.deleteAll();
+    }
+
+    @GetMapping("/all")
+    public List<PostResponse> all() {
+        return service.all();
     }
 }

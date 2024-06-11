@@ -39,4 +39,9 @@ public class JSONController {
     public void deleteAll() {
         service.deleteAll();
     }
+
+    @GetMapping("/all")
+    public List<PostResponse> all() {
+        return service.all();
+    }
 }

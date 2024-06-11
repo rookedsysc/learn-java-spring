@@ -72,4 +72,10 @@ public class JSONService {
         repository.deleteAll();
         ;
     }
+
+    public List<PostResponse> all() {
+        List<JSONPost> posts = repository.findAll();
+        List<PostResponse> response = posts.stream().map(PostResponse::fromEntity).toList();
+        return response;
+    }
 }
