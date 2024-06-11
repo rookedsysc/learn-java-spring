@@ -83,6 +83,7 @@ public class JPAService {
         voteRepository.saveAll(votes);
     }
 
+    @Transactional(readOnly = true)
     public List<PostResponse> all() {
         List<JPAPost> posts = postRepository.findAll();
         List<PostResponse> response = posts.stream().map(
