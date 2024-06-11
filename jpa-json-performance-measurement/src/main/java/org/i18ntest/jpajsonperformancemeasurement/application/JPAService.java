@@ -85,7 +85,7 @@ public class JPAService {
 
     @Transactional(readOnly = true)
     public List<PostResponse> all() {
-        List<JPAPost> posts = postRepository.findAll();
+        List<JPAPost> posts = postRepository.findAllFetch();
         List<PostResponse> response = posts.stream().map(
                 PostResponse::fromEntity
         ).toList();
