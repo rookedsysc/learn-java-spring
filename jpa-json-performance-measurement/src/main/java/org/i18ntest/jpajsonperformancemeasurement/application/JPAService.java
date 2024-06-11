@@ -2,7 +2,6 @@ package org.i18ntest.jpajsonperformancemeasurement.application;
 
 import lombok.RequiredArgsConstructor;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostResponse;
-import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostVoteRatio;
 import org.i18ntest.jpajsonperformancemeasurement.domain.JPAPost;
 import org.i18ntest.jpajsonperformancemeasurement.domain.Vote;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteRequest;
@@ -10,10 +9,13 @@ import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteResponse;
 import org.i18ntest.jpajsonperformancemeasurement.repository.JPAPostRepository;
 import org.i18ntest.jpajsonperformancemeasurement.repository.VoteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 @Service
 @RequiredArgsConstructor
@@ -51,39 +53,33 @@ public class JPAService {
         return VoteResponse.fromEntity(vote);
     }
 
-    public PostVoteRatio calculateVoteRatio(Long postId) {
-        JPAPost post = postRepository.findById(postId)
-                .orElseThrow();
+    public void deleteAll() {
+        postRepository.deleteAll();
+        voteRepository.deleteAll();
+    }
 
-        // 각 투표 항목별로 rate를 저장함
-        HashMap<Boolean, Double> rate = new HashMap<>();
+    @Transactional
+    public void bigQuery() {
+        List<JPAPost> posts = IntStream.rangeClosed(1, 10)
+                .mapToObj(i -> JPAPost.builder()
+                        .title("Title " + i)
+                        .content("Content " + i)
+                        .build())
+                .collect(Collectors.toList());
+        postRepository.saveAll(posts);
 
-        // 각 투표 항목별로 총 투표 수를 구함
-        post.getVote()
-                .stream()
-                .forEach(
-                        vote -> {
-                            Double cost = rate.getOrDefault(vote.getVote(), 0.);
-                            cost++;
-                            rate.put(vote.getVote(), cost);
-                        }
-                );
+        posts.forEach(this::createBigVotes);
+    }
 
-        double totalVoteCount = post.getVote().size();
-
-        // 각 투표 항목별로 투표 비율을 구함
-        List<Boolean> voteOptions = List.of(true, false);
-        voteOptions.forEach(key -> {
-            Double totalCost = rate.getOrDefault(key, 0.);
-            Double ratio = totalCost / totalVoteCount * 100;
-            rate.put(key, ratio);
-        });
-
-        return PostVoteRatio.builder()
-                .postId(postId)
-                .title(post.getTitle())
-                .content(post.getContent())
-                .ratio(rate)
-                .build();
+    private void createBigVotes(JPAPost post) {
+        long requestCount = 10000L;
+        List<Vote> votes = LongStream.rangeClosed(1, requestCount)
+                .mapToObj(i -> Vote.builder()
+                        .memberId(i) // 예시로 memberId를 i로 설정합니다.
+                        .vote(i % 2 == 0)
+                        .post(post)
+                        .build())
+                .collect(Collectors.toList());
+        voteRepository.saveAll(votes);
     }
 }

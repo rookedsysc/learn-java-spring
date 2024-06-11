@@ -28,8 +28,13 @@ public class JPAController {
         return service.vote(postId, request);
     }
 
-    @GetMapping("/ratio/{postId}")
-    public PostVoteRatio postVoteRatio(@PathVariable(name = "postId") Long postId) {
-        return service.calculateVoteRatio(postId);
+    @GetMapping("/big-query")
+    public void bigQuery() {
+        service.bigQuery();
+    }
+
+    @DeleteMapping("/all")
+    public void deleteAll() {
+        service.deleteAll();
     }
 }
