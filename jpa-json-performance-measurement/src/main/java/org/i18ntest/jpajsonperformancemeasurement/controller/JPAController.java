@@ -2,6 +2,7 @@ package org.i18ntest.jpajsonperformancemeasurement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.i18ntest.jpajsonperformancemeasurement.application.JPAService;
+import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostRatioResponse;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostRequest;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostResponse;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostVoteRatio;
@@ -44,4 +45,10 @@ public class JPAController {
     public List<PostResponse> all() {
         return service.all();
     }
+
+    @GetMapping("/ratio")
+    public List<PostRatioResponse> allRatio() {
+        return service.postRatioResponse();
+    }
+
 }
