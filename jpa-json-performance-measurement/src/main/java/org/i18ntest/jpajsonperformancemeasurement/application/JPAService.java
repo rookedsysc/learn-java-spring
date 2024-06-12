@@ -96,7 +96,7 @@ public class JPAService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostRatioResponse> postRatioResponse() {
+    public List<PostRatioResponse> allRatio() {
         List<JPAPost> posts = postRepository.findAll();
         List<PostRatioResponse> responses = posts.stream()
                 .map(

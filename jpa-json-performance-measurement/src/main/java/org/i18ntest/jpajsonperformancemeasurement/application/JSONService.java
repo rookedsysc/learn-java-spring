@@ -1,6 +1,7 @@
 package org.i18ntest.jpajsonperformancemeasurement.application;
 
 import lombok.RequiredArgsConstructor;
+import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostRatioResponse;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostResponse;
 import org.i18ntest.jpajsonperformancemeasurement.domain.JSONPost;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteRequest;
@@ -75,7 +76,56 @@ public class JSONService {
 
     public List<PostResponse> all() {
         List<JSONPost> posts = repository.findAll();
-        List<PostResponse> response = posts.stream().map(PostResponse::fromEntity).toList();
+        List<PostResponse> response = posts.stream()
+                .map(PostResponse::fromEntity)
+                .toList();
         return response;
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostRatioResponse> allRatio() {
+        List<JSONPost> posts = repository.findAll();
+        List<PostRatioResponse> response = posts.stream()
+                .map(
+                        post -> {
+                            return PostRatioResponse.builder()
+                                    .id(post.getId())
+                                    .title(post.getTitle())
+                                    .content(post.getContent())
+                                    .votes(
+                                            getVoteRatio(post)
+                                    )
+                                    .build();
+                        }
+                )
+                .toList();
+        return response;
+    }
+
+    private List<PostRatioResponse.VoteRatio> getVoteRatio(JSONPost post) {
+        List<Boolean> voteOptions = List.of(true, false);
+        final double totalCnt = post.getVotes()
+                .size();
+
+        List<PostRatioResponse.VoteRatio> voteRatios = voteOptions.stream(
+                )
+                .map(
+                        option -> {
+                            double ratio = (post.getVotes()
+                                    .entrySet()
+                                    .stream()
+                                    .filter(
+                                            vote -> vote.getValue()
+                                                    .equals(option)
+                                    )
+                                    .count() / totalCnt) * 100;
+                            return PostRatioResponse.VoteRatio.builder()
+                                    .voteOption(option)
+                                    .ratio(ratio)
+                                    .build();
+                        }
+                )
+                .toList();
+        return voteRatios;
     }
 }

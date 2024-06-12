@@ -5,7 +5,6 @@ import org.i18ntest.jpajsonperformancemeasurement.application.JPAService;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostRatioResponse;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostRequest;
 import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostResponse;
-import org.i18ntest.jpajsonperformancemeasurement.controller.dto.PostVoteRatio;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteRequest;
 import org.i18ntest.jpajsonperformancemeasurement.domain.dto.VoteResponse;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +47,7 @@ public class JPAController {
 
     @GetMapping("/ratio")
     public List<PostRatioResponse> allRatio() {
-        return service.postRatioResponse();
+        return service.allRatio();
     }
 
 }
